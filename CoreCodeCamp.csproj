@@ -6,34 +6,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="obj\Debug\netcoreapp2.2\CoreCodeCamp.AssemblyInfo.cs" />
-    <Compile Include="obj\Debug\netcoreapp2.2\CoreCodeCamp.RazorAssemblyInfo.cs" />
-    <Compile Include="obj\Release\netcoreapp2.2\CoreCodeCamp.AssemblyInfo.cs" />
+    <Compile Remove="bin\**" />
+    <Compile Remove="obj\**" />
+    <Content Remove="bin\**" />
+    <Content Remove="obj\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <None Remove="bin\**" />
+    <None Remove="obj\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="obj\CoreCodeCamp.csproj.nuget.dgspec.json" />
-    <Content Include="obj\project.assets.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="bin\Debug\netcoreapp2.2\" />
-    <Folder Include="bin\Release\netcoreapp2.2\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="obj\CoreCodeCamp.csproj.nuget.cache" />
-    <None Include="obj\CoreCodeCamp.csproj.nuget.g.props" />
-    <None Include="obj\CoreCodeCamp.csproj.nuget.g.targets" />
-    <None Include="obj\Debug\netcoreapp2.2\CoreCodeCamp.AssemblyInfoInputs.cache" />
-    <None Include="obj\Debug\netcoreapp2.2\CoreCodeCamp.assets.cache" />
-    <None Include="obj\Debug\netcoreapp2.2\CoreCodeCamp.csprojAssemblyReference.cache" />
-    <None Include="obj\Debug\netcoreapp2.2\CoreCodeCamp.RazorAssemblyInfo.cache" />
-    <None Include="obj\Release\netcoreapp2.2\CoreCodeCamp.AssemblyInfoInputs.cache" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
