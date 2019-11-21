@@ -15,8 +15,11 @@ using Microsoft.AspNetCore.Routing;
 
 namespace CoreCodeCamp.Controllers
 {
+    [Route("api/v{version:apiVersion}/camp/{moniker}/talks")]
+
     [ApiController]
-    [Route("api/camp/{moniker}/talks")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     public class TalksController : ControllerBase
     {
         public LinkGenerator LinkGenerator { get; }

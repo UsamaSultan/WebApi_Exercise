@@ -11,27 +11,42 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Logging;
 
 namespace CoreCodeCamp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+ 
     [ApiController]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.3")]
     public class CampController : ControllerBase
     {
         private readonly ICampRepository _repository;
         private readonly IMapper _mapper;
         private readonly LinkGenerator _linkGenerator;
+        private readonly ILogger _logger;
 
-        public CampController(ICampRepository repository, IMapper mapper, LinkGenerator linkGenerator)
+        public CampController(ICampRepository repository,
+            IMapper mapper,
+            LinkGenerator linkGenerator,
+            ILogger<CampController> logger)
         {
             _repository = repository;
             _mapper = mapper;
             _linkGenerator = linkGenerator;
+            _logger = logger;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            _logger.LogInformation("Getting All Camps from database.");
+
             try
             {
                 var results = await _repository.GetAllCampsAsync();
@@ -46,9 +61,14 @@ namespace CoreCodeCamp.Controllers
 
         }
 
+        /// </summary>
+        /// <param name="moniker"></param>
+        /// <returns> CAMP </returns>
         [HttpGet("{moniker}")]
         public async Task<ActionResult<CampModel>> GetwithMoniker(string moniker)
         {
+            _logger.LogInformation("");
+
             try
             {
                 var result = await _repository.GetCampAsync(moniker);
@@ -62,7 +82,10 @@ namespace CoreCodeCamp.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="includetalks"></param>
+        /// <returns></returns>
         [HttpGet("search")]
         public async Task<ActionResult<CampModel[]>> SearchByDate([FromQuery] DateTime dateTime, bool includetalks = false)
         {
@@ -79,7 +102,10 @@ namespace CoreCodeCamp.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
+        /// <summary>
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<CampModel>> Create(CampModel model)
         {
@@ -120,7 +146,7 @@ namespace CoreCodeCamp.Controllers
                 var oldcamp = _repository.GetCampAsync(moniker);
                 if (oldcamp == null) return NotFound($"Camp with {moniker} not found.");
 
-                await  _mapper.Map(model, oldcamp);
+                await _mapper.Map(model, oldcamp);
 
                 if (await _repository.SaveChangesAsync())
                 {

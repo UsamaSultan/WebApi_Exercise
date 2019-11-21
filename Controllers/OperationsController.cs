@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using  Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using IConfiguration = AutoMapper.Configuration.IConfiguration;
 
 namespace CoreCodeCamp.Controllers
 {
     [ApiController]
+    [ApiVersionNeutral]
     [Route("api/[controller]")]
     public class OperationsController : ControllerBase
     {
